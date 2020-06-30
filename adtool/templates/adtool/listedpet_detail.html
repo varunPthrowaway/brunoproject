@@ -1,56 +1,41 @@
 {% extends 'adtool/base.html' %}
 {% load static %}
 
-{% block stylesheet %}
-<style>
-  .chartdiv {
-    overflow-y: scroll;
-    height: 520px;
-  }
-</style>
-{% endblock stylesheet %}
-
 {% block content %}
 {% if object %}
 
-<div>
-    <div class="container">
-        <legend>
-            <h3 class="h3">
-                name:     {{ object.name }}
-            </h3>
-            <!-- <h3 class="h3">
-                criteria: {{ object.criteria_verbose }} <button class="btn btn-primary">inquire</button>
-            </h3> -->
-            <h3 class="h3">
-                Published by: {{ object.user }}
-            </h3>
-            <h3 class="h3">
-                Contact no: {{ object.user.profile.contact_no }}
-            </h3>
-            <h3 class="h3">
-                Publish Date: {{ object.publish_date }}
-            </h3>
-            <div id="is_caretaking">
-                <h3 class="h3">
-                    Activity Start Date: {{ object.start_date }}
-                </h3>
-                <h3 class="h3">
-                    Activity End Date: {{ object.end_date }}
-                </h3> 
-            </div>
-            {% if user == object.user %}
-                <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'update' object.id %}">update</a>
-                <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'delete' object.id %}">delete</a>
-            {% endif %}
-        </legend>
-        <div>
-            <img src="{{ object.image.url }}" class="img-responsive"
-                style="float: left; margin-right: 10px;" />
-        </div>
-        <h3>description:</h3><p>{{ object.description }}</p>
+<img src="{{ object.image.url }}" class="img-responsive" />
+<div class="row">
+    <div class="col-lg-3 h3">Name:</div>
+    <div class="col-lg-5 h4">{{ object.name }}</div>
+</div>
+<div class="row">
+    <div class="col-lg-3 h3">Published by:</div>
+    <div class="col-lg-5 h4">{{ object.user }}</div>
+</div>
+<div class="row">
+    <div class="col-lg-3 h3">Contact No:</div>
+    <div class="col-lg-5 h4">{{ object.user.profile.contact_no }}</div>
+</div>
+<div class="row">
+    <div class="col-lg-3 h3">Publish Date:</div>
+    <div class="col-lg-5 h4">{{ object.publish_date }}</div>
+</div>
+<div id="is_caretaking">
+    <div class="row">
+        <div class="col-lg-3 h3">Activity Start Date:</div>
+        <div class="col-lg-5 h4">{{ object.start_date }}</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 h3">Activity End Date:</div>
+        <div class="col-lg-5 h4">{{ object.end_date }}</div>
     </div>
 </div>
+<h3>description:</h3><p>{{ object.description }}</p>
+{% if user == object.user %}
+    <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'update' object.id %}">update</a>
+    <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'delete' object.id %}">delete</a>
+{% endif %}
 
 {% endif %}
 {% endblock content %}
@@ -59,7 +44,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
     $( '#is_caretaking' ).hide()
-    if (int("{{ object.criteria }}" === 1)) {
+    if ("{{ object.criteria }}" === '1') {
+        console.log("here");
         $( '#is_caretaking' ).show()
     }
 </script>
