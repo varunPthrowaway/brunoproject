@@ -1,0 +1,54 @@
+{% extends 'adtool/base.html' %}
+{% load static %}
+{% block content %}
+<h3>Search for Brunos who want your care</h3>
+<form action="{% url 'home' %}" method="GET">
+    <div class="row">
+        <div class="col-lg-7">
+            <select name="sort-by" id="sort-by" class="form-control">
+                <option value="10" selected>All</option>
+                <option value="0">Adoption</option>
+                <option value="1">Caretaking</option>
+                <option value="2">Fostering</option>
+            </select>
+        </div>
+        <div class="col-lg-5">
+            <button type="submit" id="sort-by-btn" class="btn btn-success">Go</button>
+        </div>
+    </div>
+</form>
+
+<br>
+{% if ListedPets %}
+{% if is_paginated%}
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-dark mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-dark mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+{% endif %}
+
+<div class="card-columns">
+    {% for pet in ListedPets %}
+        <div class="card">
+            <img src="{{ pet.image.url }}" class="card-img-top" alt="pet image">
+            <div class="card-body">
+                <a class="card-title h2 article-title" href="{% url 'detail' pet.id %}">{{ pet.name }}</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endif %}
+{% endblock content %}
