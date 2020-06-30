@@ -2,18 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 
-
+CATEGORY_CHOICES = [
+            (0, 'Owner'),
+            (1, 'Pet Lover'),
+            (2, 'Animal Shelter')
+]
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
     location = models.CharField(max_length=256, default="")
     category = models.IntegerField(
-        choices=[
-            (0, 'Owner'),
-            (1, 'Pet Lover'),
-            (2, 'Pet Shelter')
-        ],
+        choices=CATEGORY_CHOICES,
         default=0
     )
     contact_no = models.IntegerField(default=0)
@@ -29,3 +29,6 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+    
+    def category_verbose(self):
+        return dict(CATEGORY_CHOICES)[self.category]

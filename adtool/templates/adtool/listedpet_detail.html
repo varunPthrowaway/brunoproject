@@ -10,6 +10,10 @@
     <div class="col-lg-5 h4">{{ object.name }}</div>
 </div>
 <div class="row">
+    <div class="col-lg-3 h3">Criteria:</div>
+    <div class="col-lg-5 h4">{{ object.criteria_verbose }}</div>
+</div>
+<div class="row">
     <div class="col-lg-3 h3">Published by:</div>
     <div class="col-lg-5 h4">{{ object.user }}</div>
 </div>
@@ -23,11 +27,11 @@
 </div>
 <div id="is_caretaking">
     <div class="row">
-        <div class="col-lg-3 h3">Activity Start Date:</div>
+        <div class="col-lg-3 h3">Start Date:</div>
         <div class="col-lg-5 h4">{{ object.start_date }}</div>
     </div>
     <div class="row">
-        <div class="col-lg-3 h3">Activity End Date:</div>
+        <div class="col-lg-3 h3">End Date:</div>
         <div class="col-lg-5 h4">{{ object.end_date }}</div>
     </div>
 </div>
